@@ -1,0 +1,209 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Series_reference",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Series_reference",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Data_value",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Data_value",
+									"type": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Period",
+									"type": "String"
+								},
+								"sink": {
+									"name": "period",
+									"type": "decimal",
+									"scale": 10,
+									"precision": 18
+								}
+							},
+							{
+								"source": {
+									"name": "Suppressed",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Suppressed",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "STATUS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STATUS",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "UNITS",
+									"type": "String"
+								},
+								"sink": {
+									"name": "UNITS",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Magnitude",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Magnitude",
+									"type": "int",
+									"precision": 10
+								}
+							},
+							{
+								"source": {
+									"name": "Subject",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Subject",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Group",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Group",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_1",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Series_title_1",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_2",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Series_title_2",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_3",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Series_title_3",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_4",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Series_title_4",
+									"type": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Series_title_5",
+									"type": "String"
+								},
+								"sink": {
+									"name": "Series_title_5",
+									"type": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable1",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-06-01T16:44:27Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

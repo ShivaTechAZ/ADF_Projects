@@ -1,0 +1,79 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Series_reference",
+				"type": "nvarchar"
+			},
+			{
+				"name": "period",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "Data_value",
+				"type": "decimal",
+				"precision": 18,
+				"scale": 10
+			},
+			{
+				"name": "Suppressed",
+				"type": "nvarchar"
+			},
+			{
+				"name": "STATUS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "UNITS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Magnitude",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Subject",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Series_title_1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Series_title_2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Series_title_3",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Series_title_4",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Series_title_5",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "finance"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
