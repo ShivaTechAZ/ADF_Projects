@@ -1,0 +1,461 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ServerSk"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'AzureBlobStorage1'"
+		},
+		"AzureSqlDatabase1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'AzureSqlDatabase1'"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "shivaproject.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "shivaDB"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Shiva"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Series_reference",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Series_reference",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Data_value",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Data_value",
+											"type": "decimal",
+											"scale": 10,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Period",
+											"type": "String"
+										},
+										"sink": {
+											"name": "period",
+											"type": "decimal",
+											"scale": 10,
+											"precision": 18
+										}
+									},
+									{
+										"source": {
+											"name": "Suppressed",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Suppressed",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "STATUS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "STATUS",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "UNITS",
+											"type": "String"
+										},
+										"sink": {
+											"name": "UNITS",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Magnitude",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Magnitude",
+											"type": "int",
+											"precision": 10
+										}
+									},
+									{
+										"source": {
+											"name": "Subject",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Subject",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Group",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Group",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Series_title_1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Series_title_1",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Series_title_2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Series_title_2",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Series_title_3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Series_title_3",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Series_title_4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Series_title_4",
+											"type": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Series_title_5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "Series_title_5",
+											"type": "nvarchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": [],
+				"lastPublishTime": "2026-06-01T16:44:27Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureSqlDatabase1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Series_reference",
+						"type": "nvarchar"
+					},
+					{
+						"name": "period",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "Data_value",
+						"type": "decimal",
+						"precision": 18,
+						"scale": 10
+					},
+					{
+						"name": "Suppressed",
+						"type": "nvarchar"
+					},
+					{
+						"name": "STATUS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "UNITS",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Magnitude",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Subject",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Series_title_1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Series_title_2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Series_title_3",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Series_title_4",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Series_title_5",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "finance"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureSqlDatabase1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "business-financial-data-december-2025-quarter.csv",
+						"container": "project1"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Series_reference",
+						"type": "String"
+					},
+					{
+						"name": "Period",
+						"type": "String"
+					},
+					{
+						"name": "Data_value",
+						"type": "String"
+					},
+					{
+						"name": "Suppressed",
+						"type": "String"
+					},
+					{
+						"name": "STATUS",
+						"type": "String"
+					},
+					{
+						"name": "UNITS",
+						"type": "String"
+					},
+					{
+						"name": "Magnitude",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Group",
+						"type": "String"
+					},
+					{
+						"name": "Series_title_1",
+						"type": "String"
+					},
+					{
+						"name": "Series_title_2",
+						"type": "String"
+					},
+					{
+						"name": "Series_title_3",
+						"type": "String"
+					},
+					{
+						"name": "Series_title_4",
+						"type": "String"
+					},
+					{
+						"name": "Series_title_5",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStorage1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStorage1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlDatabase1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"server": "[parameters('AzureSqlDatabase1_properties_typeProperties_server')]",
+					"database": "[parameters('AzureSqlDatabase1_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('AzureSqlDatabase1_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('AzureSqlDatabase1_password')]"
+					},
+					"alwaysEncryptedSettings": {
+						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
