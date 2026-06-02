@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "DelimitedText2",
+						"referenceName": "DelimitedText3",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -104,8 +104,14 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "AzureSqlTable1",
-									"type": "DatasetReference"
+									"referenceName": "AzureSqlTable2",
+									"type": "DatasetReference",
+									"parameters": {
+										"tableName": {
+											"value": "@item().itemName",
+											"type": "Expression"
+										}
+									}
 								}
 							]
 						}
