@@ -1,0 +1,15 @@
+{
+	"name": "ServerSk",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "52f54131-ca8c-4f45-8bc5-6bd041bfb988",
+		"tenantId": "fae55806-a87d-4173-b2df-6ce6afd4a1c3"
+	}
+}
